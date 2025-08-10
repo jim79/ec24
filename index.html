@@ -36,7 +36,7 @@
         }
 
         .header h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
@@ -407,7 +407,7 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 1.5em; }
+            .header h1 { font-size: 2em; }
             .header h2 { font-size: 1.2em; }
             .course-basic-info { grid-template-columns: 1fr; }
             .mapping-table { font-size: 0.75em; }
@@ -423,10 +423,6 @@
         <div class="header">
             <h1>Course Outcome - Program Outcome Mapping Tool</h1>
             <h2>Comprehensive Competency Assessment System</h2>
-            <div style="padding: 7px;">
-                <h4 style="font-size: large;">Dept. of Electronics and Communication Engg.</h4>
-                <h4 style="font-size: large;">College of Engineering Trivandrum</h4>
-            </div>
         </div>
 
         <div class="course-editor">
@@ -474,7 +470,9 @@
                 <button class="nav-tab" onclick="showTab('po10')">PO10: Communication</button>
                 <button class="nav-tab" onclick="showTab('po11')">PO11: Project Management</button>
                 <button class="nav-tab" onclick="showTab('po12')">PO12: Lifelong Learning</button>
-                <button class="nav-tab" onclick="showTab('pso')">PSO: Program Specific</button>
+                <button class="nav-tab" onclick="showTab('pso1')">PSO1: Professional Skills</button>
+                <button class="nav-tab" onclick="showTab('pso2')">PSO2: Problem-Solving</button>
+                <button class="nav-tab" onclick="showTab('pso3')">PSO3: Professional Ethics</button>
             </div>
         </div>
 
@@ -519,6 +517,19 @@
                         <!-- Summary data will be inserted here -->
                     </tbody>
                 </table>
+
+                <h3 style="text-align: center; margin: 30px 0 20px 0; color: #2c3e50;">Consolidated CO-PO/PSO Mapping</h3>
+                <table class="summary-table" id="consolidatedMappingTable">
+                    <thead>
+                        <tr id="consolidatedHeaderRow">
+                            <th style="width: 80px;">CO</th>
+                            <!-- PO/PSO headers will be inserted here -->
+                        </tr>
+                    </thead>
+                    <tbody id="consolidatedMappingBody">
+                        <!-- Consolidated mapping data will be inserted here -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -553,7 +564,7 @@
             mappings: {}
         };
 
-        // Program Outcomes Data
+        // Program Outcomes Data (from Excel file)
         const programOutcomes = {
             po1: {
                 title: "PO1: Engineering Knowledge",
@@ -563,91 +574,117 @@
                         comp: "1.1",
                         competency: "Demonstrate competence in mathematical modelling",
                         indicators: [
-                            { pi: "1.1.1", description: "Apply mathematical techniques such as calculus, linear algebra and statistics modelling to solve problems" },
-                            { pi: "1.1.2", description: "Apply advanced mathematical techniques to model and solve Electronics and Communication engineering problems" }
+                            { pi: "1.1.1", description: "Apply mathematical techniques such as calculus, linear algebra. and statistics modelling to solve problems" },
+                            { pi: "1.1.2", description: "Apply advanced mathematical techniques to model and solve Electronics and Communication engineering problems." }
                         ]
                     },
                     {
-                        comp: "1.2", 
+                        comp: "1.2",
                         competency: "Demonstrate an ability to design experiments to solve open-ended problems",
                         indicators: [
-                            { pi: "1.2.1", description: "Apply laws of physics to an engineering problem" }
+                            { pi: "1.2.1", description: "Apply laws of physics to an engineering problem." }
                         ]
                     },
                     {
                         comp: "1.3",
-                        competency: "Demonstrate competence in engineering fundamentals", 
+                        competency: "Demonstrate competence in engineering fundamentals",
                         indicators: [
                             { pi: "1.3.1", description: "Apply fundamental engineering concepts to solve engineering problems" },
-                            { pi: "1.3.2", description: "Build models/prototypes to develop a diverse set of design solutions" },
-                            { pi: "1.3.3", description: "Apply suitable criteria for evaluation of alternate design and select suitable engineering design solution for further development" }
+                            { pi: "1.3.2", description: "Build models/prototypes to develop a diverse set of design solutions." },
+                            { pi: "1.3.3", description: "Apply suitable criteria for evaluation of alternate design and select suitable engineering design solution for further development." }
                         ]
                     },
                     {
                         comp: "1.4",
                         competency: "Demonstrate competence in specialized engineering knowledge to the program",
                         indicators: [
-                            { pi: "1.4.1", description: "Apply Electronics and Communication engineering concepts to solve engineering problems" }
+                            { pi: "1.4.1", description: "Apply Electronics and Communication engineering concepts to solve engineering problems." }
                         ]
                     }
                 ]
             },
             po2: {
                 title: "PO2: Problem Analysis",
-                description: "Identify, formulate, review research literature, and analyze complex engineering problems reaching substantiated conclusions using first principles of mathematics, natural sciences, and engineering sciences.",
+                description: "Identify, formulate, research literature, and analyse complex engineering problems reaching substantiated conclusions using first principles of mathematics, natural sciences, and engineering sciences.",
                 competencies: [
                     {
                         comp: "2.1",
-                        competency: "Demonstrate ability to formulate and solve engineering problems",
+                        competency: "Demonstrate an ability to identify and formulate complex engineering problem",
                         indicators: [
-                            { pi: "2.1.1", description: "Identify and formulate engineering problems from given specifications" },
-                            { pi: "2.1.2", description: "Apply appropriate techniques and modern engineering tools to solve engineering problems" }
+                            { pi: "2.1.1", description: "Articulate problem statements and identify objectives" },
+                            { pi: "2.1.2", description: "Identify engineering systems, variables, and parameters to solve the problems" },
+                            { pi: "2.1.3", description: "Identify the mathematical, engineering and other relevant knowledge that applies to a given problem" }
                         ]
                     },
                     {
                         comp: "2.2",
-                        competency: "Demonstrate ability to analyze complex problems",
+                        competency: "Demonstrate an ability to formulate a solution plan and methodology for an engineering problem",
                         indicators: [
-                            { pi: "2.2.1", description: "Break down complex problems into manageable sub-problems" },
-                            { pi: "2.2.2", description: "Apply systematic approach to problem analysis using first principles" }
+                            { pi: "2.2.1", description: "Reframe complex problems into interconnected sub-problems" },
+                            { pi: "2.2.2", description: "Identify, assemble and evaluate information and resources." },
+                            { pi: "2.2.3", description: "Identify existing processes/solution methods for solving the problem, including forming justified approximations and assumptions" },
+                            { pi: "2.2.4", description: "Compare and contrast alternative solution processes to select the best process." }
                         ]
                     },
                     {
                         comp: "2.3",
-                        competency: "Demonstrate ability to review research literature",
+                        competency: "Demonstrate an ability to formulate and interpret a model",
                         indicators: [
-                            { pi: "2.3.1", description: "Identify and review relevant research literature for problem solving" },
-                            { pi: "2.3.2", description: "Critically evaluate research findings and apply to current problems" }
+                            { pi: "2.3.1", description: "Combine scientific principles and engineering concepts to formulate model/s (mathematical or otherwise) of a system or process that is appropriate in terms of applicability and required accuracy." },
+                            { pi: "2.3.2", description: "Identify assumptions (mathematical and physical) necessary to allow modelling of a system at the level of accuracy required." }
+                        ]
+                    },
+                    {
+                        comp: "2.4",
+                        competency: "Demonstrate an ability to execute a solution process and analyze results",
+                        indicators: [
+                            { pi: "2.4.1", description: "Apply engineering mathematics and computations to solve mathematical models" },
+                            { pi: "2.4.2", description: "Produce and validate results through skillful use of contemporary engineering tools and models" },
+                            { pi: "2.4.3", description: "Identify sources of error in the solution process, and limitations of the solution." },
+                            { pi: "2.4.4", description: "Extract desired understanding and conclusions consistent with objectives and limitations of the analysis" }
                         ]
                     }
                 ]
             },
             po3: {
                 title: "PO3: Design/Development of Solutions",
-                description: "Design solutions for complex engineering problems and design system components or processes that meet the specified needs with appropriate consideration for the public health and safety, and the cultural, societal, and environmental considerations.",
+                description: "Design solutions for complex engineering problems and design system components or processes that meet the specified needs with appropriate consideration for public health and safety, and cultural, societal, and environmental considerations.",
                 competencies: [
                     {
                         comp: "3.1",
-                        competency: "Demonstrate ability to design solutions for engineering problems",
+                        competency: "Demonstrate an ability to define a complex/ open- ended problem in engineering terms",
                         indicators: [
-                            { pi: "3.1.1", description: "Design solutions for engineering problems with appropriate consideration for public health and safety" },
-                            { pi: "3.1.2", description: "Apply design methodology to develop innovative solutions" }
+                            { pi: "3.1.1", description: "Recognize that need analysis is key to good problem definition" },
+                            { pi: "3.1.2", description: "Elicit and document, engineering requirements from stakeholders" },
+                            { pi: "3.1.3", description: "Synthesize engineering requirements from a review of the state-of-the-art" },
+                            { pi: "3.1.4", description: "Extract engineering requirements from relevant engineering Codes and Standards such as IEEE, ISO, ITU-R, ITU-T etc." },
+                            { pi: "3.1.5", description: "Explore and synthesize engineering requirements considering health, safety risks, environmental, cultural and societal issues" },
+                            { pi: "3.1.6", description: "Determine design objectives, functional requirements and arrive at specifications" }
                         ]
                     },
                     {
                         comp: "3.2",
-                        competency: "Demonstrate ability to design system components",
+                        competency: "Demonstrate an ability to generate a diverse set of alternative design solutions",
                         indicators: [
-                            { pi: "3.2.1", description: "Design system components considering cultural and societal factors" },
-                            { pi: "3.2.2", description: "Incorporate environmental considerations in design solutions" }
+                            { pi: "3.2.1", description: "Apply formal idea generation tools to develop multiple engineering design solutions (e.g. brainstorming, mind-mapping etc.)" },
+                            { pi: "3.2.2", description: "Build models/prototypes to develop a diverse set of design solutions" },
+                            { pi: "3.2.3", description: "Identify suitable criteria for the evaluation of alternate design solutions" }
                         ]
                     },
                     {
                         comp: "3.3",
-                        competency: "Demonstrate ability to optimize design solutions",
+                        competency: "Demonstrate an ability to select an optimal design scheme for further development",
                         indicators: [
-                            { pi: "3.3.1", description: "Apply optimization techniques to improve design efficiency" },
-                            { pi: "3.3.2", description: "Validate and verify design solutions through testing and simulation" }
+                            { pi: "3.3.1", description: "Apply formal decision-making tools to select optimal engineering design solutions" },
+                            { pi: "3.3.2", description: "Consult with domain experts and stakeholders to select candidate design solutions for further development" }
+                        ]
+                    },
+                    {
+                        comp: "3.4",
+                        competency: "Demonstrate an ability to advance an engineering design to defined end state",
+                        indicators: [
+                            { pi: "3.4.1", description: "Refine a conceptual design into a detailed design within the scope, constraints and timeline of the project" },
+                            { pi: "3.4.2", description: "Generate information through appropriate tests to improve or validate the design" }
                         ]
                     }
                 ]
@@ -658,116 +695,102 @@
                 competencies: [
                     {
                         comp: "4.1",
-                        competency: "Demonstrate ability to design experiments",
+                        competency: "Demonstrate an ability to conduct investigations of technical issues consistent with their level of knowledge and understanding",
                         indicators: [
-                            { pi: "4.1.1", description: "Design experiments to investigate complex engineering problems" },
-                            { pi: "4.1.2", description: "Apply appropriate research methodologies and experimental techniques" }
+                            { pi: "4.1.1", description: "Define a problem, its scope and importance for purposes of investigation" },
+                            { pi: "4.1.2", description: "Examine the relevant methods, tools and techniques of experimentation as they apply to the problem" },
+                            { pi: "4.1.3", description: "Apply appropriate instrumentation and/or software tools to conduct investigations" },
+                            { pi: "4.1.4", description: "Establish a relationship between measured data and underlying physical principles" }
                         ]
                     },
                     {
                         comp: "4.2",
-                        competency: "Demonstrate ability to analyze and interpret data",
+                        competency: "Demonstrate an ability to design experiments to solve open-ended problems",
                         indicators: [
-                            { pi: "4.2.1", description: "Collect, analyze and interpret experimental data effectively" },
-                            { pi: "4.2.2", description: "Apply statistical methods for data analysis and validation" }
+                            { pi: "4.2.1", description: "Design and develop an experimental approach, specify appropriate equipment and procedures" },
+                            { pi: "4.2.2", description: "Understand the importance of the statistical design of experiments and select appropriate approaches" }
                         ]
                     },
                     {
                         comp: "4.3",
-                        competency: "Demonstrate ability to synthesize information",
+                        competency: "Demonstrate an ability to conduct investigations of technical issues consistent with their level of knowledge and understanding",
                         indicators: [
-                            { pi: "4.3.1", description: "Synthesize information from multiple sources to draw valid conclusions" },
-                            { pi: "4.3.2", description: "Validate conclusions through peer review and expert consultation" }
+                            { pi: "4.3.1", description: "Use appropriate procedures, tools and techniques to conduct investigations and gather information (e.g. literature search, simulation, laboratory investigations)" },
+                            { pi: "4.3.2", description: "Analyze data for trends and correlations, stating possible errors and limitations" },
+                            { pi: "4.3.3", description: "Represent data (in tabular and/or graphical forms) so as to facilitate analysis and explanation" },
+                            { pi: "4.3.4", description: "Synthesize information and knowledge about the problem from the investigation" }
                         ]
                     }
                 ]
             },
             po5: {
                 title: "PO5: Modern Tool Usage",
-                description: "Create, select, and apply appropriate techniques, resources, and modern engineering and IT tools including prediction and modeling to complex engineering activities with an understanding of the limitations.",
+                description: "Create, select, and apply appropriate techniques, resources, and modern engineering and IT tools including prediction and modelling to complex engineering activities with an understanding of the limitations.",
                 competencies: [
                     {
                         comp: "5.1",
-                        competency: "Demonstrate competence in modern engineering tools",
+                        competency: "Demonstrate an ability to identify/ create modern engineering tools, techniques and resources",
                         indicators: [
-                            { pi: "5.1.1", description: "Select and apply appropriate modern engineering tools for problem solving" },
-                            { pi: "5.1.2", description: "Understand and work within the limitations of engineering tools" }
+                            { pi: "5.1.1", description: "Identify modern engineering tools and techniques and resources for engineering activities" },
+                            { pi: "5.1.2", description: "Create/adapt/modify/extend tools and techniques to solve engineering problems" }
                         ]
                     },
                     {
                         comp: "5.2",
-                        competency: "Demonstrate competence in IT tools and software",
+                        competency: "Demonstrate an ability to select and apply discipline- specific tools, techniques and resources",
                         indicators: [
-                            { pi: "5.2.1", description: "Apply appropriate IT tools and software for engineering applications" },
-                            { pi: "5.2.2", description: "Develop custom software solutions for specific engineering problems" }
+                            { pi: "5.2.1", description: "Identify the strengths and limitations of tools for (i) acquiring information, (ii) modelling and simulating, and (iii) interpreting and analyzing engineering systems" },
+                            { pi: "5.2.2", description: "Demonstrate proficiency in using discipline-specific tools" }
                         ]
                     },
                     {
                         comp: "5.3",
-                        competency: "Demonstrate competence in modeling and simulation",
+                        competency: "Demonstrate an ability to evaluate the suitability and limitations of tools used to solve an engineering problem",
                         indicators: [
-                            { pi: "5.3.1", description: "Create and validate mathematical models for engineering systems" },
-                            { pi: "5.3.2", description: "Apply simulation tools for prediction and analysis" }
+                            { pi: "5.3.1", description: "Discuss limitations and validate tools, techniques and resources used to solve engineering problems" },
+                            { pi: "5.3.2", description: "Verify the credibility of results from tool use with reference to the assumptions and limitations of the tools" }
                         ]
                     }
                 ]
             },
             po6: {
                 title: "PO6: The Engineer and Society",
-                description: "Apply reasoning informed by the contextual knowledge to assess societal, health, safety, legal and cultural issues and the consequent responsibilities relevant to the professional engineering practice.",
+                description: "Apply reasoning informed by the contextual knowledge to assess societal, health, safety, legal, and cultural issues and the consequent responsibilities relevant to the professional engineering practice.",
                 competencies: [
                     {
                         comp: "6.1",
-                        competency: "Demonstrate understanding of societal impact",
+                        competency: "Demonstrate an ability to describe engineering roles in a broader context, e.g. pertaining to the environment, health, safety, legal and public welfare",
                         indicators: [
-                            { pi: "6.1.1", description: "Assess the societal impact of engineering solutions" },
-                            { pi: "6.1.2", description: "Consider cultural diversity in engineering practice" }
+                            { pi: "6.1.1", description: "Identify and describe various engineering roles; particularly as pertaining to protection of the public and public interest" }
                         ]
                     },
                     {
                         comp: "6.2",
-                        competency: "Demonstrate understanding of health and safety",
+                        competency: "Demonstrate an understanding of professional engineering regulations, legislation and standards",
                         indicators: [
-                            { pi: "6.2.1", description: "Apply health and safety principles in engineering practice" },
-                            { pi: "6.2.2", description: "Assess risks and implement safety measures" }
-                        ]
-                    },
-                    {
-                        comp: "6.3",
-                        competency: "Demonstrate understanding of legal and professional responsibilities",
-                        indicators: [
-                            { pi: "6.3.1", description: "Understand legal implications of engineering decisions" },
-                            { pi: "6.3.2", description: "Demonstrate professional responsibility and accountability" }
+                            { pi: "6.2.1", description: "Interpret legislation, regulations, codes, and standards relevant to their engineering discipline" }
                         ]
                     }
                 ]
             },
             po7: {
                 title: "PO7: Environment and Sustainability",
-                description: "Understand the impact of the professional engineering solutions in societal and environmental contexts, and demonstrate the knowledge of, and need for sustainable development.",
+                description: "Understand the impact of the professional engineering solutions in societal and environmental contexts, and demonstrate the knowledge of, and the need for sustainable development.",
                 competencies: [
                     {
                         comp: "7.1",
-                        competency: "Demonstrate understanding of environmental impact",
+                        competency: "Demonstrate an understanding of the impact of engineering and industrial practices on social, environmental and in economic contexts",
                         indicators: [
-                            { pi: "7.1.1", description: "Assess environmental impact of engineering solutions" },
-                            { pi: "7.1.2", description: "Apply principles of environmental protection in engineering practice" }
+                            { pi: "7.1.1", description: "Identify risks/impacts in the life-cycle of an engineering product or activity and/or in a professional engineering role" },
+                            { pi: "7.1.2", description: "Understand the relationship between the technical, socio-economic and environmental dimensions of sustainability as they apply to engineering practice" }
                         ]
                     },
                     {
                         comp: "7.2",
-                        competency: "Demonstrate knowledge of sustainable development",
+                        competency: "Demonstrate an ability to apply principles of sustainable design and development",
                         indicators: [
-                            { pi: "7.2.1", description: "Apply principles of sustainable development in engineering design" },
-                            { pi: "7.2.2", description: "Evaluate sustainability metrics in engineering projects" }
-                        ]
-                    },
-                    {
-                        comp: "7.3",
-                        competency: "Demonstrate commitment to environmental stewardship",
-                        indicators: [
-                            { pi: "7.3.1", description: "Promote environmental awareness in engineering practice" },
-                            { pi: "7.3.2", description: "Implement eco-friendly engineering solutions" }
+                            { pi: "7.2.1", description: "Describe management techniques for sustainable development" },
+                            { pi: "7.2.2", description: "Apply principles of preventive engineering and sustainable development in design and operations" }
                         ]
                     }
                 ]
@@ -778,26 +801,17 @@
                 competencies: [
                     {
                         comp: "8.1",
-                        competency: "Demonstrate understanding of engineering ethics",
+                        competency: "Demonstrate an ability to recognize ethical dilemmas",
                         indicators: [
-                            { pi: "8.1.1", description: "Apply ethical principles in engineering decision making" },
-                            { pi: "8.1.2", description: "Identify and resolve ethical dilemmas in engineering practice" }
+                            { pi: "8.1.1", description: "Identify situations of unethical professional conduct and propose appropriate action" }
                         ]
                     },
                     {
                         comp: "8.2",
-                        competency: "Demonstrate professional integrity",
+                        competency: "Demonstrate an ability to apply the Code of Ethics",
                         indicators: [
-                            { pi: "8.2.1", description: "Maintain honesty and integrity in professional practice" },
-                            { pi: "8.2.2", description: "Accept responsibility for engineering decisions and their consequences" }
-                        ]
-                    },
-                    {
-                        comp: "8.3",
-                        competency: "Demonstrate commitment to professional standards",
-                        indicators: [
-                            { pi: "8.3.1", description: "Adhere to professional codes of conduct" },
-                            { pi: "8.3.2", description: "Promote ethical behavior in engineering practice" }
+                            { pi: "8.2.1", description: "Identify tenets of the IEEE professional code of ethics" },
+                            { pi: "8.2.2", description: "Examine and apply moral & ethical principles to known case studies" }
                         ]
                     }
                 ]
@@ -808,146 +822,159 @@
                 competencies: [
                     {
                         comp: "9.1",
-                        competency: "Demonstrate effective individual work skills",
+                        competency: "Demonstrate an ability to form a team and define a role for each member",
                         indicators: [
-                            { pi: "9.1.1", description: "Manage time and resources effectively for individual tasks" },
-                            { pi: "9.1.2", description: "Demonstrate self-motivation and self-directed learning" }
+                            { pi: "9.1.1", description: "Recognize a variety of working and learning preferences; appreciate the value of diversity on a team" },
+                            { pi: "9.1.2", description: "Implement the norms of practice (e.g., rules, roles, charters, agendas, etc.) of effective team work" }
                         ]
                     },
                     {
                         comp: "9.2",
-                        competency: "Demonstrate effective teamwork skills",
+                        competency: "Demonstrate effective individual and team operations-- communication, problem- solving, conflict resolution and leadership skills",
                         indicators: [
-                            { pi: "9.2.1", description: "Collaborate effectively with team members from diverse backgrounds" },
-                            { pi: "9.2.2", description: "Contribute positively to team dynamics and goals" }
+                            { pi: "9.2.1", description: "Demonstrate effective communication, problem-solving, conflict resolution and leadership skills" },
+                            { pi: "9.2.2", description: "Treat other team members respectfully" },
+                            { pi: "9.2.3", description: "Listen to other members" },
+                            { pi: "9.2.4", description: "Maintain composure in difficult situations" }
                         ]
                     },
                     {
                         comp: "9.3",
-                        competency: "Demonstrate leadership skills",
+                        competency: "Demonstrate success in a team-based project",
                         indicators: [
-                            { pi: "9.3.1", description: "Lead teams effectively in multidisciplinary settings" },
-                            { pi: "9.3.2", description: "Facilitate collaboration and resolve conflicts in team settings" }
+                            { pi: "9.3.1", description: "Present results as a team, with smooth integration of contributions from all individual efforts" }
                         ]
                     }
                 ]
             },
             po10: {
                 title: "PO10: Communication",
-                description: "Communicate effectively on complex engineering activities with the engineering community and with society at large, such as, being able to comprehend and write effective reports and design documentation, make effective presentations, and give and receive clear instructions.",
+                description: "Communicate effectively on complex engineering activities with the engineering community and with the society at large, such as being able to comprehend and write effective reports and design documentation, make effective presentations, and give and receive clear instructions",
                 competencies: [
                     {
                         comp: "10.1",
-                        competency: "Demonstrate effective written communication",
+                        competency: "Demonstrate an ability to comprehend technical literature and document project work",
                         indicators: [
-                            { pi: "10.1.1", description: "Write clear and effective technical reports and documentation" },
-                            { pi: "10.1.2", description: "Prepare comprehensive design documentation" }
+                            { pi: "10.1.1", description: "Read, understand and interpret technical and non-technical information" },
+                            { pi: "10.1.2", description: "Produce clear, well-constructed, and well-supported written engineering documents" },
+                            { pi: "10.1.3", description: "Create flow in a document or presentation - a logical progression that builds from point to point" }
                         ]
                     },
                     {
                         comp: "10.2",
-                        competency: "Demonstrate effective oral communication",
+                        competency: "Demonstrate competence in listening, speaking, and presentation",
                         indicators: [
-                            { pi: "10.2.1", description: "Make effective presentations to technical and non-technical audiences" },
-                            { pi: "10.2.2", description: "Participate effectively in technical discussions and meetings" }
+                            { pi: "10.2.1", description: "Listen to and comprehend information, instructions, and viewpoints of others" },
+                            { pi: "10.2.2", description: "Deliver effective oral presentations to technical and non-technical audiences" }
                         ]
                     },
                     {
                         comp: "10.3",
-                        competency: "Demonstrate effective interpersonal communication",
+                        competency: "Demonstrate the ability to integrate different modes of communication",
                         indicators: [
-                            { pi: "10.3.1", description: "Give and receive clear instructions and feedback" },
-                            { pi: "10.3.2", description: "Communicate complex engineering concepts to diverse audiences" }
+                            { pi: "10.3.1", description: "Create engineering-standard figures, reports and drawings to supplement written and oral communication" },
+                            { pi: "10.3.2", description: "Use a variety of media effectively to convey a message in a written report or presentation" }
                         ]
                     }
                 ]
             },
             po11: {
                 title: "PO11: Project Management and Finance",
-                description: "Demonstrate knowledge and understanding of the engineering and management principles and apply these to one's own work, as a member and leader in a team, to manage projects and in multidisciplinary environments.",
+                description: "Demonstrate knowledge and understanding of the engineering and management principles and apply these to one's work, as a member and leader in a team, to manage projects and in multidisciplinary environments.",
                 competencies: [
                     {
                         comp: "11.1",
-                        competency: "Demonstrate understanding of project management principles",
+                        competency: "Demonstrate an ability to evaluate the economic and financial performance of an engineering activity",
                         indicators: [
-                            { pi: "11.1.1", description: "Apply project management principles to engineering projects" },
-                            { pi: "11.1.2", description: "Plan, execute, and monitor project activities effectively" }
+                            { pi: "11.1.1", description: "Describe various economic and financial costs/benefits of an engineering activity" },
+                            { pi: "11.1.2", description: "Analyze different forms of financial statements to evaluate the health of an organization" }
                         ]
                     },
                     {
                         comp: "11.2",
-                        competency: "Demonstrate understanding of financial principles",
+                        competency: "Demonstrate an ability to compare and contrast the costs/benefits of alternate proposals for an engineering activity",
                         indicators: [
-                            { pi: "11.2.1", description: "Apply basic financial principles in engineering projects" },
-                            { pi: "11.2.2", description: "Evaluate economic feasibility of engineering solutions" }
+                            { pi: "11.2.1", description: "Analyze and select the most appropriate proposal based one costs/benefits associated with the potential economic, social and environmental impacts" }
                         ]
                     },
                     {
                         comp: "11.3",
-                        competency: "Demonstrate management skills in multidisciplinary environments",
+                        competency: "Demonstrate an ability to plan/manage an engineering activity within time and budget constraints",
                         indicators: [
-                            { pi: "11.3.1", description: "Manage resources and schedules in multidisciplinary projects" },
-                            { pi: "11.3.2", description: "Coordinate activities across different engineering disciplines" }
+                            { pi: "11.3.1", description: "Identify the tasks required to complete an engineering activity and estimate the resources required for these tasks" },
+                            { pi: "11.3.2", description: "Use project management tools to schedule an engineering project" }
                         ]
                     }
                 ]
             },
             po12: {
                 title: "PO12: Life-long Learning",
-                description: "Recognize the need for, and have the preparation and ability to engage in independent and life-long learning in the broadest context of technological change.",
+                description: "Recognise the need for, and have the preparation and ability to engage in independent and life-long learning in the broadest context of technological change.",
                 competencies: [
                     {
                         comp: "12.1",
-                        competency: "Demonstrate commitment to continuous learning",
+                        competency: "Demonstrate an ability to identify gaps in knowledge and a strategy to close these gaps",
                         indicators: [
-                            { pi: "12.1.1", description: "Recognize the need for continuous professional development" },
-                            { pi: "12.1.2", description: "Engage in self-directed learning activities" }
+                            { pi: "12.1.1", description: "Describe the rationale for the requirement for continuing professional development" },
+                            { pi: "12.1.2", description: "Identify deficiencies or gaps in knowledge and demonstrate a strategy to close the gaps" }
                         ]
                     },
                     {
                         comp: "12.2",
-                        competency: "Demonstrate adaptability to technological change",
+                        competency: "Demonstrate an ability to identify changing trends in engineering knowledge and practice",
                         indicators: [
-                            { pi: "12.2.1", description: "Adapt to new technologies and methodologies" },
-                            { pi: "12.2.2", description: "Update skills and knowledge to remain current in the field" }
+                            { pi: "12.2.1", description: "Identify historic points of technological advance in engineering and explain their importance to the advancement of the profession" },
+                            { pi: "12.2.2", description: "Recognize the need and be able to clearly explain why it is important to keep current with changing technology" }
                         ]
                     },
                     {
                         comp: "12.3",
-                        competency: "Demonstrate ability for independent learning",
+                        competency: "Demonstrate an ability to identify and access sources for new information",
                         indicators: [
-                            { pi: "12.3.1", description: "Identify learning needs and pursue appropriate learning opportunities" },
-                            { pi: "12.3.2", description: "Evaluate and integrate new knowledge into professional practice" }
+                            { pi: "12.3.1", description: "Source and comprehend technical literature and other credible sources of information" },
+                            { pi: "12.3.2", description: "Analyze sourced technical and popular information for feasibility, credibility, and relevance" }
                         ]
                     }
                 ]
             },
-            pso: {
-                title: "PSO: Program Specific Outcomes",
-                description: "Program-specific outcomes for Electronics and Communication Engineering",
+            pso1: {
+                title: "PSO1: Professional Skills",
+                description: "An ability to visualize and work on laboratory and multidisciplinary problems using latest software tools",
                 competencies: [
                     {
                         comp: "PSO1",
-                        competency: "Electronics System Design",
+                        competency: "Professional Skills",
                         indicators: [
-                            { pi: "PSO1.1", description: "Design and develop analog and digital electronic circuits and systems" },
-                            { pi: "PSO1.2", description: "Analyze and optimize electronic system performance" }
+                            { pi: "PSO1.1", description: "An ability to visualize and work on laboratory and multidisciplinary problems using latest software tools" },
+                            { pi: "PSO1.2", description: "An ability to apply engineering knowledge to solve complex problems in the domains of Electronics and Communication Engineering" }
                         ]
-                    },
+                    }
+                ]
+            },
+            pso2: {
+                title: "PSO2: Problem-Solving Skills", 
+                description: "An ability to design and develop innovative solutions for real world problems by applying principles of Electronics and Communication Engineering",
+                competencies: [
                     {
                         comp: "PSO2",
-                        competency: "Communication Systems",
+                        competency: "Problem-Solving Skills",
                         indicators: [
-                            { pi: "PSO2.1", description: "Design and implement communication systems and protocols" },
-                            { pi: "PSO2.2", description: "Analyze signal processing and transmission characteristics" }
+                            { pi: "PSO2.1", description: "An ability to design and develop innovative solutions for real world problems by applying principles of Electronics and Communication Engineering" },
+                            { pi: "PSO2.2", description: "An ability to adapt to emerging electronic technologies" }
                         ]
-                    },
+                    }
+                ]
+            },
+            pso3: {
+                title: "PSO3: Professional and Ethical Attitude",
+                description: "An ability to work professionally with ethical responsibility as an individual as well as in multidisciplinary teams with positive attitude",
+                competencies: [
                     {
                         comp: "PSO3",
-                        competency: "Research and Innovation",
+                        competency: "Professional and Ethical Attitude",
                         indicators: [
-                            { pi: "PSO3.1", description: "Conduct research in emerging areas of electronics and communication" },
-                            { pi: "PSO3.2", description: "Develop innovative solutions for real-world problems" }
+                            { pi: "PSO3.1", description: "An ability to work professionally with ethical responsibility as an individual as well as in multidisciplinary teams with positive attitude" },
+                            { pi: "PSO3.2", description: "An ability to engage in lifelong learning for sustainable development with contemporary issues" }
                         ]
                     }
                 ]
@@ -1275,52 +1302,55 @@
             const summaryBody = document.getElementById('overallSummaryBody');
             summaryBody.innerHTML = '';
 
-            Object.keys(programOutcomes).forEach(poKey => {
+            const allKeys = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
+            allKeys.forEach(poKey => {
                 const poData = programOutcomes[poKey];
-                let poSum = 0;
-                let poCount = 0;
+                if (poData) {
+                    let poSum = 0;
+                    let poCount = 0;
 
-                // Calculate PO totals
-                poData.competencies.forEach(comp => {
-                    comp.indicators.forEach(indicator => {
-                        const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                        for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            poSum += value;
-                            poCount++;
-                            if (value > 0) totalMappings++;
-                            if (value >= 2) highCorrelations++;
-                        }
+                    // Calculate PO totals
+                    poData.competencies.forEach(comp => {
+                        comp.indicators.forEach(indicator => {
+                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                            for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                poSum += value;
+                                poCount++;
+                                if (value > 0) totalMappings++;
+                                if (value >= 2) highCorrelations++;
+                            }
+                        });
                     });
-                });
 
-                totalSum += poSum;
-                totalCount += poCount;
+                    totalSum += poSum;
+                    totalCount += poCount;
 
-                const poAverage = poCount > 0 ? (poSum / poCount) : 0;
-                let poLevel = 0;
-                if (poAverage >= 0.75) poLevel = 3;
-                else if (poAverage >= 0.5) poLevel = 2;
-                else if (poAverage >= 0.25) poLevel = 1;
+                    const poAverage = poCount > 0 ? (poSum / poCount) : 0;
+                    let poLevel = 0;
+                    if (poAverage >= 0.75) poLevel = 3;
+                    else if (poAverage >= 0.5) poLevel = 2;
+                    else if (poAverage >= 0.25) poLevel = 1;
 
-                const completeness = poCount > 0 ? Math.round((poSum / (poCount * 3)) * 100) : 0;
+                    const completeness = poCount > 0 ? Math.round((poSum / (poCount * 3)) * 100) : 0;
 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${poData.title.split(':')[0]}</strong></td>
-                    <td>${poData.title.split(':')[1] || poData.description.substring(0, 50) + '...'}</td>
-                    <td>${poSum}</td>
-                    <td>${poAverage.toFixed(1)}</td>
-                    <td><span class="correlation-level level-${poLevel}">${poLevel}</span></td>
-                    <td>
-                        <div class="progress-bar" style="margin: 0;">
-                            <div class="progress-fill" style="width: ${completeness}%; height: 4px;"></div>
-                        </div>
-                        ${completeness}%
-                    </td>
-                `;
-                summaryBody.appendChild(row);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><strong>${poData.title.split(':')[0]}</strong></td>
+                        <td>${poData.title.split(':')[1] || poData.description.substring(0, 50) + '...'}</td>
+                        <td>${poSum}</td>
+                        <td>${poAverage.toFixed(1)}</td>
+                        <td><span class="correlation-level level-${poLevel}">${poLevel}</span></td>
+                        <td>
+                            <div class="progress-bar" style="margin: 0;">
+                                <div class="progress-fill" style="width: ${completeness}%; height: 4px;"></div>
+                            </div>
+                            ${completeness}%
+                        </td>
+                    `;
+                    summaryBody.appendChild(row);
+                }
             });
 
             // Update overall stats
@@ -1331,6 +1361,68 @@
             document.getElementById('avgCorrelation').textContent = overallAverage.toFixed(1);
             document.getElementById('highCorrelations').textContent = highCorrelations;
             document.getElementById('mappingCompleteness').textContent = mappingCompleteness + '%';
+
+            // Generate consolidated mapping table
+            generateConsolidatedMappingTable();
+        }
+
+        // Generate consolidated mapping table
+        function generateConsolidatedMappingTable() {
+            const headerRow = document.getElementById('consolidatedHeaderRow');
+            const tbody = document.getElementById('consolidatedMappingBody');
+            
+            // Clear existing content
+            headerRow.innerHTML = '<th style="width: 80px;">CO</th>';
+            tbody.innerHTML = '';
+            
+            // Add headers for all POs and PSOs separately
+            const poKeys = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12'];
+            const psoKeys = ['pso1', 'pso2', 'pso3'];
+            
+            [...poKeys, ...psoKeys].forEach(key => {
+                const poData = programOutcomes[key];
+                if (poData) {
+                    const shortTitle = poData.title.split(':')[0];
+                    headerRow.innerHTML += `<th style="width: 60px;">${shortTitle}</th>`;
+                }
+            });
+            
+            // Generate rows for each CO
+            courseData.courseOutcomes.forEach((co, coIndex) => {
+                const coNum = coIndex + 1;
+                const row = document.createElement('tr');
+                let rowHTML = `<td><strong>CO${coNum}</strong></td>`;
+                
+                // Calculate level for each PO and PSO
+                [...poKeys, ...psoKeys].forEach(key => {
+                    const poData = programOutcomes[key];
+                    if (poData) {
+                        let sum = 0;
+                        let count = 0;
+
+                        poData.competencies.forEach(comp => {
+                            comp.indicators.forEach(indicator => {
+                                const mappingKey = `${key}_${comp.comp}_${indicator.pi}`;
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${coNum}`] || 0) : 0;
+                                sum += value;
+                                count++;
+                            });
+                        });
+
+                        const average = count > 0 ? (sum / count) : 0;
+                        let level = 0;
+                        if (average >= 0.75) level = 3;
+                        else if (average >= 0.5) level = 2;
+                        else if (average >= 0.25) level = 1;
+                        
+                        rowHTML += `<td><span class="correlation-level level-${level}">${level}</span></td>`;
+                    }
+                });
+                
+                row.innerHTML = rowHTML;
+                tbody.appendChild(row);
+            });
         }
 
         // Show tab
@@ -1444,157 +1536,163 @@
                 ['Outcome', 'Description', 'Total Mappings', 'Average', 'Correlation Level', 'Completeness %']
             ];
             
-            Object.keys(programOutcomes).forEach(poKey => {
+            const allKeysForSummary = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
+            allKeysForSummary.forEach(poKey => {
                 const poData = programOutcomes[poKey];
-                let poSum = 0;
-                let poCount = 0;
+                if (poData) {
+                    let poSum = 0;
+                    let poCount = 0;
 
-                poData.competencies.forEach(comp => {
-                    comp.indicators.forEach(indicator => {
-                        const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                        for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            poSum += value;
-                            poCount++;
-                        }
+                    poData.competencies.forEach(comp => {
+                        comp.indicators.forEach(indicator => {
+                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                            for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                poSum += value;
+                                poCount++;
+                            }
+                        });
                     });
-                });
 
-                const poAverage = poCount > 0 ? (poSum / poCount) : 0;
-                let poLevel = 0;
-                if (poAverage >= 0.75) poLevel = 3;
-                else if (poAverage >= 0.5) poLevel = 2;
-                else if (poAverage >= 0.25) poLevel = 1;
+                    const poAverage = poCount > 0 ? (poSum / poCount) : 0;
+                    let poLevel = 0;
+                    if (poAverage >= 0.75) poLevel = 3;
+                    else if (poAverage >= 0.5) poLevel = 2;
+                    else if (poAverage >= 0.25) poLevel = 1;
 
-                const completeness = poCount > 0 ? Math.round((poSum / (poCount * 3)) * 100) : 0;
-                
-                overallSummaryData.push([
-                    poData.title.split(':')[0],
-                    poData.title.split(':')[1] || poData.description.substring(0, 100),
-                    poSum,
-                    poAverage.toFixed(1),
-                    poLevel,
-                    completeness
-                ]);
+                    const completeness = poCount > 0 ? Math.round((poSum / (poCount * 3)) * 100) : 0;
+                    
+                    overallSummaryData.push([
+                        poData.title.split(':')[0],
+                        poData.title.split(':')[1] || poData.description.substring(0, 100),
+                        poSum,
+                        poAverage.toFixed(1),
+                        poLevel,
+                        completeness
+                    ]);
+                }
             });
             
             const overallSummaryWS = XLSX.utils.aoa_to_sheet(overallSummaryData);
             XLSX.utils.book_append_sheet(wb, overallSummaryWS, 'Overall Summary');
             
-            // Create detailed sheets for each PO
-            Object.keys(programOutcomes).forEach(poKey => {
+            // Create detailed sheets for each PO and PSO
+            const allOutcomes = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
+            allOutcomes.forEach(poKey => {
                 const poData = programOutcomes[poKey];
-                const sheetData = [
-                    [poData.title],
-                    [poData.description],
-                    [''],
-                    ['Competency', 'Competency Description', 'PI', 'Performance Indicator', ...courseData.courseOutcomes.map((_, i) => `CO${i + 1}`)]
-                ];
+                if (poData) {
+                    const sheetData = [
+                        [poData.title],
+                        [poData.description],
+                        [''],
+                        ['Competency', 'Competency Description', 'PI', 'Performance Indicator', ...courseData.courseOutcomes.map((_, i) => `CO${i + 1}`)]
+                    ];
 
-                poData.competencies.forEach(comp => {
-                    comp.indicators.forEach((indicator, indIndex) => {
-                        const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                        const row = [
-                            indIndex === 0 ? comp.comp : '',
-                            indIndex === 0 ? comp.competency : '',
-                            indicator.pi,
-                            indicator.description
-                        ];
-                        
-                        // Add CO values
-                        for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            row.push(value);
-                        }
-                        
-                        sheetData.push(row);
-                    });
-                });
-
-                // Add summary rows
-                sheetData.push(['']);
-                sheetData.push(['SUMMARY']);
-                
-                // Number of Correlations row
-                const correlationsRow = ['Number of Correlations', '', '', ''];
-                for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                    let sum = 0;
                     poData.competencies.forEach(comp => {
-                        comp.indicators.forEach(indicator => {
+                        comp.indicators.forEach((indicator, indIndex) => {
                             const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            sum += value;
+                            const row = [
+                                indIndex === 0 ? comp.comp : '',
+                                indIndex === 0 ? comp.competency : '',
+                                indicator.pi,
+                                indicator.description
+                            ];
+                            
+                            // Add CO values
+                            for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                row.push(value);
+                            }
+                            
+                            sheetData.push(row);
                         });
                     });
-                    correlationsRow.push(sum);
-                }
-                sheetData.push(correlationsRow);
-                
-                // Total Competencies row
-                const totalCompetencies = poData.competencies.reduce((sum, comp) => sum + comp.indicators.length, 0);
-                const totalRow = ['Total Competencies', '', '', '', ...Array(courseData.courseOutcomes.length).fill(totalCompetencies)];
-                sheetData.push(totalRow);
-                
-                // Average row
-                const averageRow = ['Average', '', '', ''];
-                for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                    let sum = 0;
-                    let count = 0;
-                    poData.competencies.forEach(comp => {
-                        comp.indicators.forEach(indicator => {
-                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            sum += value;
-                            count++;
-                        });
-                    });
-                    const average = count > 0 ? (sum / count) : 0;
-                    averageRow.push(average.toFixed(1));
-                }
-                sheetData.push(averageRow);
-                
-                // Correlation Level row
-                const levelRow = ['Correlation Level', '', '', ''];
-                for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                    let sum = 0;
-                    let count = 0;
-                    poData.competencies.forEach(comp => {
-                        comp.indicators.forEach(indicator => {
-                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            sum += value;
-                            count++;
-                        });
-                    });
-                    const average = count > 0 ? (sum / count) : 0;
-                    let level = 0;
-                    if (average >= 0.75) level = 3;
-                    else if (average >= 0.5) level = 2;
-                    else if (average >= 0.25) level = 1;
-                    levelRow.push(level);
-                }
-                sheetData.push(levelRow);
 
-                const ws = XLSX.utils.aoa_to_sheet(sheetData);
-                
-                // Set column widths
-                const colWidths = [
-                    { wch: 10 }, // Competency
-                    { wch: 40 }, // Competency Description
-                    { wch: 8 },  // PI
-                    { wch: 60 }, // Performance Indicator
-                    ...courseData.courseOutcomes.map(() => ({ wch: 8 })) // CO columns
-                ];
-                ws['!cols'] = colWidths;
+                    // Add summary rows
+                    sheetData.push(['']);
+                    sheetData.push(['SUMMARY']);
+                    
+                    // Number of Correlations row
+                    const correlationsRow = ['Number of Correlations', '', '', ''];
+                    for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                        let sum = 0;
+                        poData.competencies.forEach(comp => {
+                            comp.indicators.forEach(indicator => {
+                                const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                sum += value;
+                            });
+                        });
+                        correlationsRow.push(sum);
+                    }
+                    sheetData.push(correlationsRow);
+                    
+                    // Total Competencies row
+                    const totalCompetencies = poData.competencies.reduce((sum, comp) => sum + comp.indicators.length, 0);
+                    const totalRow = ['Total Competencies', '', '', '', ...Array(courseData.courseOutcomes.length).fill(totalCompetencies)];
+                    sheetData.push(totalRow);
+                    
+                    // Average row
+                    const averageRow = ['Average', '', '', ''];
+                    for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                        let sum = 0;
+                        let count = 0;
+                        poData.competencies.forEach(comp => {
+                            comp.indicators.forEach(indicator => {
+                                const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                sum += value;
+                                count++;
+                            });
+                        });
+                        const average = count > 0 ? (sum / count) : 0;
+                        averageRow.push(average.toFixed(1));
+                    }
+                    sheetData.push(averageRow);
+                    
+                    // Correlation Level row
+                    const levelRow = ['Correlation Level', '', '', ''];
+                    for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                        let sum = 0;
+                        let count = 0;
+                        poData.competencies.forEach(comp => {
+                            comp.indicators.forEach(indicator => {
+                                const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                sum += value;
+                                count++;
+                            });
+                        });
+                        const average = count > 0 ? (sum / count) : 0;
+                        let level = 0;
+                        if (average >= 0.75) level = 3;
+                        else if (average >= 0.5) level = 2;
+                        else if (average >= 0.25) level = 1;
+                        levelRow.push(level);
+                    }
+                    sheetData.push(levelRow);
 
-                // Clean sheet name for Excel compatibility
-                const sheetName = poData.title.split(':')[0].replace(/[\\\/\?\*\[\]]/g, '');
-                XLSX.utils.book_append_sheet(wb, ws, sheetName);
+                    const ws = XLSX.utils.aoa_to_sheet(sheetData);
+                    
+                    // Set column widths
+                    const colWidths = [
+                        { wch: 10 }, // Competency
+                        { wch: 40 }, // Competency Description
+                        { wch: 8 },  // PI
+                        { wch: 60 }, // Performance Indicator
+                        ...courseData.courseOutcomes.map(() => ({ wch: 8 })) // CO columns
+                    ];
+                    ws['!cols'] = colWidths;
+
+                    // Clean sheet name for Excel compatibility
+                    const sheetName = poData.title.split(':')[0].replace(/[\\\/\?\*\[\]]/g, '');
+                    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+                }
             });
             
             // Create Consolidated Summary Sheet
@@ -1604,27 +1702,76 @@
                 ['Performance Indicator', ...courseData.courseOutcomes.map((_, i) => `CO${i + 1}`), 'PO/PSO']
             ];
             
-            Object.keys(programOutcomes).forEach(poKey => {
+            const allOutcomeKeys = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
+            allOutcomeKeys.forEach(poKey => {
                 const poData = programOutcomes[poKey];
-                poData.competencies.forEach(comp => {
-                    comp.indicators.forEach(indicator => {
-                        const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                        const row = [`${comp.comp} - ${indicator.pi}`];
-                        
-                        for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
-                            const value = courseData.mappings[mappingKey] ? 
-                                (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
-                            row.push(value);
-                        }
-                        
-                        row.push(poData.title.split(':')[0]);
-                        consolidatedData.push(row);
+                if (poData) {
+                    poData.competencies.forEach(comp => {
+                        comp.indicators.forEach(indicator => {
+                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                            const row = [`${comp.comp} - ${indicator.pi}`];
+                            
+                            for (let co = 1; co <= courseData.courseOutcomes.length; co++) {
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
+                                row.push(value);
+                            }
+                            
+                            row.push(poData.title.split(':')[0]);
+                            consolidatedData.push(row);
+                        });
                     });
-                });
+                }
             });
             
             const consolidatedWS = XLSX.utils.aoa_to_sheet(consolidatedData);
             XLSX.utils.book_append_sheet(wb, consolidatedWS, 'Consolidated Matrix');
+            
+            // Create CO-PO Consolidated Mapping Table (as requested)
+            const coPoMappingData = [
+                ['CO-PO/PSO Consolidated Mapping'],
+                [''],
+                ['', 'PO1', 'PO2', 'PO3', 'PO4', 'PO5', 'PO6', 'PO7', 'PO8', 'PO9', 'PO10', 'PO11', 'PO12', 'PSO1', 'PSO2', 'PSO3']
+            ];
+            
+            // Calculate consolidated mapping levels for each CO
+            courseData.courseOutcomes.forEach((co, coIndex) => {
+                const coNum = coIndex + 1;
+                const row = [`CO${coNum}`];
+                
+                // Add PO and PSO levels in the correct order
+                const allKeys = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
+                allKeys.forEach(poKey => {
+                    const poData = programOutcomes[poKey];
+                    if (poData) {
+                        let sum = 0;
+                        let count = 0;
+
+                        poData.competencies.forEach(comp => {
+                            comp.indicators.forEach(indicator => {
+                                const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
+                                const value = courseData.mappings[mappingKey] ? 
+                                    (courseData.mappings[mappingKey][`co${coNum}`] || 0) : 0;
+                                sum += value;
+                                count++;
+                            });
+                        });
+
+                        const average = count > 0 ? (sum / count) : 0;
+                        let level = 0;
+                        if (average >= 0.75) level = 3;
+                        else if (average >= 0.5) level = 2;
+                        else if (average >= 0.25) level = 1;
+                        
+                        row.push(level);
+                    }
+                });
+                
+                coPoMappingData.push(row);
+            });
+            
+            const coPoMappingWS = XLSX.utils.aoa_to_sheet(coPoMappingData);
+            XLSX.utils.book_append_sheet(wb, coPoMappingWS, 'CO-PO Mapping Summary');
             
             // Generate and download the Excel file
             const fileName = `${courseData.courseCode}_CO_PO_Mapping_${new Date().toISOString().split('T')[0]}.xlsx`;
@@ -1642,7 +1789,7 @@
             }
         }
 
-        // Load sample data
+                    // Load sample data
         function loadSampleData() {
             const sampleMappings = {
                 'po1_1.3_1.3.1': { co1: 2, co2: 1, co3: 0, co4: 0, co5: 1 },
@@ -1653,7 +1800,13 @@
                 'po9_9.2_9.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
                 'po9_9.2_9.2.2': { co1: 0, co2: 0, co3: 0, co4: 2, co5: 3 },
                 'po10_10.1_10.1.1': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 2 },
-                'po10_10.2_10.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 }
+                'po10_10.2_10.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
+                'pso1_PSO1_PSO1.1': { co1: 0, co2: 1, co3: 1, co4: 3, co5: 2 },
+                'pso1_PSO1_PSO1.2': { co1: 0, co2: 2, co3: 1, co4: 2, co5: 1 },
+                'pso2_PSO2_PSO2.1': { co1: 0, co2: 0, co3: 1, co4: 3, co5: 3 },
+                'pso2_PSO2_PSO2.2': { co1: 0, co2: 1, co3: 2, co4: 2, co5: 2 },
+                'pso3_PSO3_PSO3.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
+                'pso3_PSO3_PSO3.2': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 3 }
             };
 
             courseData.mappings = sampleMappings;
