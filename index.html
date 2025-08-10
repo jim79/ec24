@@ -1,4 +1,4 @@
-F<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -418,6 +418,15 @@ F<!DOCTYPE html>
         }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDN61Q3YNT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YDN61Q3YNT');
+</script>
 <body>
     <div class="container">
         <div class="header">
@@ -475,9 +484,9 @@ F<!DOCTYPE html>
                 <button class="nav-tab" onclick="showTab('po10')">PO10: Communication</button>
                 <button class="nav-tab" onclick="showTab('po11')">PO11: Project Management</button>
                 <button class="nav-tab" onclick="showTab('po12')">PO12: Lifelong Learning</button>
-                <button class="nav-tab" onclick="showTab('pso1')">PSO1: Professional Skills</button>
-                <button class="nav-tab" onclick="showTab('pso2')">PSO2: Problem-Solving</button>
-                <button class="nav-tab" onclick="showTab('pso3')">PSO3: Professional Ethics</button>
+                <button class="nav-tab" onclick="showTab('pso1')">PSO1: Domain Knowledge</button>
+                <button class="nav-tab" onclick="showTab('pso2')">PSO2: Application Skill</button>
+                <button class="nav-tab" onclick="showTab('pso3')">PSO3: Research</button>
             </div>
         </div>
 
@@ -947,43 +956,91 @@ F<!DOCTYPE html>
                 ]
             },
             pso1: {
-                title: "PSO1: Professional Skills",
-                description: "An ability to visualize and work on laboratory and multidisciplinary problems using latest software tools",
+                title: "PSO1: Domain Knowledge",
+                description: "Apply basic science and engineering knowledge to address real-world problems in Electronics and Communication with sustainable technologies.",
                 competencies: [
                     {
-                        comp: "PSO1",
-                        competency: "Professional Skills",
+                        comp: "PSO.1.1",
+                        competency: "Demonstrate an ability to apply principles of basic science to model and understand instrumentation systems.",
                         indicators: [
-                            { pi: "PSO1.1", description: "An ability to visualize and work on laboratory and multidisciplinary problems using latest software tools" },
-                            { pi: "PSO1.2", description: "An ability to apply engineering knowledge to solve complex problems in the domains of Electronics and Communication Engineering" }
+                            { pi: "PSO.1.1.1", description: "Apply principles of physics (e.g., thermodynamics, electromagnetism) to understand sensor behavior." },
+                            { pi: "PSO.1.1.2", description: "Use mathematical modeling techniques such as differential equations and Laplace transforms to analyze system responses." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.1.2",
+                        competency: "Demonstrate an ability to apply core electronics and instrumentation knowledge to real-world scenarios.",
+                        indicators: [
+                            { pi: "PSO.1.2.1", description: "Interface sensors and actuators with data acquisition systems for physical parameter monitoring." },
+                            { pi: "PSO.1.2.2", description: "Design and implement signal conditioning circuits to handle real-world signals with noise and variability." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.1.3",
+                        competency: "Demonstrate an ability to incorporate sustainable technologies in the design of electronic/instrumentation systems.",
+                        indicators: [
+                            { pi: "PSO.1.3.1", description: "Select low-power and recyclable components to reduce environmental impact." },
+                            { pi: "PSO.1.3.2", description: "Design systems with features like energy harvesting or minimal power consumption for long-term deployment." }
                         ]
                     }
                 ]
             },
             pso2: {
-                title: "PSO2: Problem-Solving Skills", 
-                description: "An ability to design and develop innovative solutions for real world problems by applying principles of Electronics and Communication Engineering",
+                title: "PSO2: Application Skill", 
+                description: "Design and solve state-of-the-art requirements in the electronics industry with ethical and societal responsibilities.",
                 competencies: [
                     {
-                        comp: "PSO2",
-                        competency: "Problem-Solving Skills",
+                        comp: "PSO.2.1",
+                        competency: "Demonstrate technical proficiency in designing industry-relevant electronic systems",
                         indicators: [
-                            { pi: "PSO2.1", description: "An ability to design and develop innovative solutions for real world problems by applying principles of Electronics and Communication Engineering" },
-                            { pi: "PSO2.2", description: "An ability to adapt to emerging electronic technologies" }
+                            { pi: "PSO.2.1.1", description: "Identify and define technical requirements for designing electronic systems aligned with current industrial trends (e.g., IoT, VLSI, embedded systems)." },
+                            { pi: "PSO.2.1.2", description: "Design and simulate electronic circuits or embedded subsystems using industry-standard tools such as MATLAB, Cadence, or Arduino IDE." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.2.2",
+                        competency: "Apply problem-solving and project execution skills in interdisciplinary team environments",
+                        indicators: [
+                            { pi: "PSO.2.2.1", description: "Translate real-world or client requirements into functional specifications and propose feasible technical solutions in a team setting." },
+                            { pi: "PSO.2.2.2", description: "Collaborate effectively in diverse teams to plan, develop, and deliver engineering solutions within defined time and resource constraints." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.2.3",
+                        competency: "Exhibit ethical decision-making and societal awareness in engineering applications",
+                        indicators: [
+                            { pi: "PSO.2.3.1", description: "Identify and address ethical issues, safety considerations, and societal impact in the design and deployment of electronic systems." },
+                            { pi: "PSO.2.3.2", description: "Demonstrate the ability to balance technical performance with societal impact by proposing and implementing cost-effective, sustainable solutions that promote user safety, accessibility, and environmental responsibility." }
                         ]
                     }
                 ]
             },
             pso3: {
-                title: "PSO3: Professional and Ethical Attitude",
-                description: "An ability to work professionally with ethical responsibility as an individual as well as in multidisciplinary teams with positive attitude",
+                title: "PSO3: Research",
+                description: "Adapt to evolving technologies, analyze systems/processes, and contribute to research for societal well-being.",
                 competencies: [
                     {
-                        comp: "PSO3",
-                        competency: "Professional and Ethical Attitude",
+                        comp: "PSO.3.1",
+                        competency: "Stay Current with Evolving Technologies",
                         indicators: [
-                            { pi: "PSO3.1", description: "An ability to work professionally with ethical responsibility as an individual as well as in multidisciplinary teams with positive attitude" },
-                            { pi: "PSO3.2", description: "An ability to engage in lifelong learning for sustainable development with contemporary issues" }
+                            { pi: "PSO.3.1.1", description: "Identify emerging trends, tools, or platforms relevant to ECE through literature, courses, or patents." },
+                            { pi: "PSO.3.1.2", description: "Apply newly learned tools/technologies to solve specific technical challenges or prototype a system." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.3.2",
+                        competency: "Analyze and Model Engineering Systems or Processes",
+                        indicators: [
+                            { pi: "PSO.3.2.1", description: "Formulate research problems by analyzing existing system limitations and performance metrics." },
+                            { pi: "PSO.3.2.2", description: "Develop and validate mathematical or simulation models using analytical tools (e.g., MATLAB, Python, ADS)." }
+                        ]
+                    },
+                    {
+                        comp: "PSO.3.3",
+                        competency: "Contribute to Societal Well-Being through Research",
+                        indicators: [
+                            { pi: "PSO.3.3.1", description: "Conduct research or innovation projects addressing real-world societal needs (e.g., healthcare, agriculture, environment)." },
+                            { pi: "PSO.3.3.2", description: "Disseminate findings through posters, papers, or prototypes for peer/public review with attention to ethical and sustainable outcomes." }
                         ]
                     }
                 ]
@@ -1424,7 +1481,7 @@ F<!DOCTYPE html>
                         if (average >= 0.75) level = 3;
                         else if (average >= 0.5) level = 2;
                         else if (average >= 0.25) level = 1;
-                        //682017
+                        
                         rowHTML += `<td><span class="correlation-level level-${level}">${level}</span></td>`;
                     }
                 });
@@ -1461,14 +1518,15 @@ F<!DOCTYPE html>
             const dataToSave = {
                 ...courseData,
                 timestamp: new Date().toISOString(),
-                version: '1.0'
+                version: '1.0',
+                department: 'ECE'
             };
 
             const blob = new Blob([JSON.stringify(dataToSave, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${courseData.courseCode}_mapping_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `${courseData.courseCode || 'ECE_Course'}_ECE_mapping_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -1487,9 +1545,15 @@ F<!DOCTYPE html>
                 try {
                     const loadedData = JSON.parse(e.target.result);
                     
-                    // Validate data structure
-                    if (loadedData.courseCode && loadedData.courseTitle && loadedData.courseOutcomes) {
-                        courseData = { ...loadedData };
+                    // Validate data structure - be more flexible with validation
+                    if (loadedData.courseOutcomes && Array.isArray(loadedData.courseOutcomes)) {
+                        // Merge loaded data with default structure
+                        courseData = {
+                            courseCode: loadedData.courseCode || '',
+                            courseTitle: loadedData.courseTitle || '',
+                            courseOutcomes: loadedData.courseOutcomes || courseData.courseOutcomes,
+                            mappings: loadedData.mappings || {}
+                        };
                         
                         // Update UI
                         document.getElementById('courseCode').value = courseData.courseCode;
@@ -1505,7 +1569,7 @@ F<!DOCTYPE html>
                         throw new Error('Invalid file format');
                     }
                 } catch (error) {
-                    showMessage('Load Error', 'Failed to load the file. Please ensure it\'s a valid mapping data file.', 'error');
+                    showMessage('Load Error', 'Failed to load the file. Please ensure it\'s a valid mapping data file. Error: ' + error.message, 'error');
                 }
             };
             reader.readAsText(file);
@@ -1538,7 +1602,7 @@ F<!DOCTYPE html>
             const courseInfoWS = XLSX.utils.aoa_to_sheet(courseInfoData);
             XLSX.utils.book_append_sheet(wb, courseInfoWS, 'Course Info');
             
-            // Create Overall Summary Sheet
+            // Create Overall Summary Sheet (682017)
             const overallSummaryData = [
                 ['Overall Correlation Summary'],
                 [''],
@@ -1798,7 +1862,7 @@ F<!DOCTYPE html>
             }
         }
 
-                    // Load sample data
+        // Load sample data
         function loadSampleData() {
             const sampleMappings = {
                 'po1_1.3_1.3.1': { co1: 2, co2: 1, co3: 0, co4: 0, co5: 1 },
@@ -1810,12 +1874,12 @@ F<!DOCTYPE html>
                 'po9_9.2_9.2.2': { co1: 0, co2: 0, co3: 0, co4: 2, co5: 3 },
                 'po10_10.1_10.1.1': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 2 },
                 'po10_10.2_10.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
-                'pso1_PSO1_PSO1.1': { co1: 0, co2: 1, co3: 1, co4: 3, co5: 2 },
-                'pso1_PSO1_PSO1.2': { co1: 0, co2: 2, co3: 1, co4: 2, co5: 1 },
-                'pso2_PSO2_PSO2.1': { co1: 0, co2: 0, co3: 1, co4: 3, co5: 3 },
-                'pso2_PSO2_PSO2.2': { co1: 0, co2: 1, co3: 2, co4: 2, co5: 2 },
-                'pso3_PSO3_PSO3.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
-                'pso3_PSO3_PSO3.2': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 3 }
+                'pso1_PSO.1.1_PSO.1.1.1': { co1: 0, co2: 1, co3: 1, co4: 3, co5: 2 },
+                'pso1_PSO.1.2_PSO.1.2.1': { co1: 0, co2: 2, co3: 1, co4: 2, co5: 1 },
+                'pso2_PSO.2.1_PSO.2.1.1': { co1: 0, co2: 0, co3: 1, co4: 3, co5: 3 },
+                'pso2_PSO.2.2_PSO.2.2.1': { co1: 0, co2: 1, co3: 2, co4: 2, co5: 2 },
+                'pso3_PSO.3.1_PSO.3.1.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
+                'pso3_PSO.3.2_PSO.3.2.1': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 3 }
             };
 
             courseData.mappings = sampleMappings;
@@ -1839,14 +1903,20 @@ F<!DOCTYPE html>
         function resetAllData() {
             if (confirm('This will reset ALL data including course details and mappings. Continue?')) {
                 courseData = {
-                    courseCode: '',
-                    courseTitle: '',
-                    courseOutcomes: ['', '', '', '', ''],
+                    courseCode: 'GXEST203',
+                    courseTitle: 'FOUNDATIONS OF COMPUTING: FROM HARDWARE ESSENTIALS TO WEB DESIGN',
+                    courseOutcomes: [
+                        'Identify the fundamental components and the working of an IT environment.',
+                        'Explain the data representations, CPU architectures, and the basic functioning of a computer.',
+                        'Explain the operating systems, computer network architecture, and necessary protocols used.',
+                        'Develop simple interactive web pages and validate the inputs.',
+                        'Collaborate effectively in teams to plan, implement, test, and present a course project that demonstrates web page development using html, css and java script'
+                    ],
                     mappings: {}
                 };
 
-                document.getElementById('courseCode').value = '';
-                document.getElementById('courseTitle').value = '';
+                document.getElementById('courseCode').value = courseData.courseCode;
+                document.getElementById('courseTitle').value = courseData.courseTitle;
                 
                 initializeCOEditors();
                 generateAllTabs();
