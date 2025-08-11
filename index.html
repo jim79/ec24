@@ -465,7 +465,7 @@
             <button class="btn btn-success" onclick="saveData()"><i class="fas fa-save"></i> Save Data</button>
             <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()"><i class="fas fa-folder-open"></i> Load Data</button>
             <button class="btn btn-warning" onclick="exportResults()"><i class="fas fa-file-excel"></i> Export Excel</button>
-            <button class="btn btn-warning" onclick="showSampleData()"><i class="fas fa-bullseye"></i> Load Sample</button>
+            <button class="btn btn-warning" onclick="showSampleData()"><i class="fas fa-bullseye"></i> Load Random</button>
             <button class="btn btn-danger" onclick="resetAllData()"><i class="fas fa-redo"></i> Reset All</button>
             <input type="file" id="fileInput" class="file-input" accept=".json" onchange="loadData(event)">
         </div>
@@ -1190,7 +1190,7 @@
                             (courseData.mappings[mappingKey][`co${co}`] || 0) : 0;
                         tableHTML += `
                             <td class="input-cell">
-                                <input type="number" min="0" max="3" value="${currentValue}" 
+                                <input type="number" min="0" max="1" value="${currentValue}" 
                                        data-mapping="${mappingKey}" data-co="co${co}" 
                                        oninput="updateMapping('${mappingKey}', 'co${co}', this.value)">
                             </td>
@@ -1857,29 +1857,36 @@
 
         // Show sample data
         function showSampleData() {
-            if (confirm('This will replace current data with sample data. Continue?')) {
+            if (confirm('This will replace current data with random values. Continue?')) {
                 loadSampleData();
             }
+        }
+
+        // Helper function to generate random numbers in a range
+        function getRandomInt(min, max) {
+            min = Math.ceil(min); // Ensure min is an integer
+            max = Math.floor(max); // Ensure max is an integer
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         // Load sample data
         function loadSampleData() {
             const sampleMappings = {
-                'po1_1.3_1.3.1': { co1: 2, co2: 1, co3: 0, co4: 0, co5: 1 },
-                'po1_1.4_1.4.1': { co1: 3, co2: 2, co3: 1, co4: 0, co5: 0 },
-                'po3_3.1_3.1.2': { co1: 0, co2: 0, co3: 1, co4: 3, co5: 2 },
-                'po5_5.2_5.2.1': { co1: 1, co2: 2, co3: 2, co4: 3, co5: 3 },
-                'po5_5.2_5.2.2': { co1: 0, co2: 1, co3: 1, co4: 3, co5: 3 },
-                'po9_9.2_9.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
-                'po9_9.2_9.2.2': { co1: 0, co2: 0, co3: 0, co4: 2, co5: 3 },
-                'po10_10.1_10.1.1': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 2 },
-                'po10_10.2_10.2.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
-                'pso1_PSO.1.1_PSO.1.1.1': { co1: 0, co2: 1, co3: 1, co4: 3, co5: 2 },
-                'pso1_PSO.1.2_PSO.1.2.1': { co1: 0, co2: 2, co3: 1, co4: 2, co5: 1 },
-                'pso2_PSO.2.1_PSO.2.1.1': { co1: 0, co2: 0, co3: 1, co4: 3, co5: 3 },
-                'pso2_PSO.2.2_PSO.2.2.1': { co1: 0, co2: 1, co3: 2, co4: 2, co5: 2 },
-                'pso3_PSO.3.1_PSO.3.1.1': { co1: 0, co2: 0, co3: 0, co4: 1, co5: 3 },
-                'pso3_PSO.3.2_PSO.3.2.1': { co1: 0, co2: 0, co3: 1, co4: 2, co5: 3 }
+                'po1_1.1_1.1.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po1_1.4_1.4.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po3_3.1_3.1.2': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po5_5.2_5.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po5_5.2_5.2.2': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po9_9.2_9.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po9_9.2_9.2.2': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po10_10.1_10.1.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'po10_10.2_10.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso1_PSO.1.1_PSO.1.1.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso1_PSO.1.2_PSO.1.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso2_PSO.2.1_PSO.2.1.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso2_PSO.2.2_PSO.2.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso3_PSO.3.1_PSO.3.1.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) },
+                'pso3_PSO.3.2_PSO.3.2.1': { co1: getRandomInt(0,1), co2: getRandomInt(0,1), co3: getRandomInt(0,1), co4: getRandomInt(0,1), co5: getRandomInt(0,1) }
             };
 
             courseData.mappings = sampleMappings;
@@ -1896,7 +1903,7 @@
 
             updateCalculations();
             updateOverallSummary();
-            showMessage('Sample Data Loaded', 'Sample mapping data has been loaded successfully.', 'success');
+            showMessage('Random Data Loaded', 'Random data has been loaded successfully.', 'success');
         }
 
         // Reset all data
