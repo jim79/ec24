@@ -355,68 +355,6 @@
             font-size: 0.85em;
         }
 
-        .justification-section {
-            background: #f8f9fa;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-        }
-
-        .justification-title {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .justification-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .justification-item {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e9ecef;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .justification-header {
-            font-weight: bold;
-            color: #34495e;
-            margin-bottom: 8px;
-            font-size: 0.9em;
-        }
-
-        .justification-textarea {
-            width: 100%;
-            min-height: 60px;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9em;
-            font-family: inherit;
-            resize: vertical;
-            transition: border-color 0.3s ease;
-        }
-
-        .justification-textarea:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
-        }
-
-        .justification-textarea::placeholder {
-            color: #95a5a6;
-            font-style: italic;
-        }
-
         .file-input {
             display: none;
         }
@@ -641,8 +579,7 @@
                 'Develop simple interactive web pages and validate the inputs.',
                 'Collaborate effectively in teams to plan, implement, test, and present a course project that demonstrates web page development using html, css and java script'
             ],
-            mappings: {},
-            justifications: {}
+            mappings: {}
         };
 
         // Program Outcomes Data (from Excel file)
@@ -1269,36 +1206,6 @@
                     </tbody>
                 </table>
                 
-                <div class="justification-section">
-                    <div class="justification-title">
-                        <i class="fas fa-comment-alt"></i>
-                        Mapping Justifications for ${poData.title}
-                    </div>
-                    <div class="justification-grid">
-            `;
-
-            // Add justification textareas for each Performance Indicator
-            poData.competencies.forEach(comp => {
-                comp.indicators.forEach((indicator, indIndex) => {
-                    const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                    const currentJustification = courseData.justifications[mappingKey] || '';
-                    
-                    tableHTML += `
-                        <div class="justification-item">
-                            <div class="justification-header">${indicator.pi} - ${indicator.description}</div>
-                            <textarea class="justification-textarea" 
-                                      data-justification="${mappingKey}"
-                                      placeholder="Enter justification for mapping this Performance Indicator to course outcomes..."
-                                      oninput="updateJustification('${mappingKey}', this.value)">${currentJustification}</textarea>
-                        </div>
-                    `;
-                });
-            });
-
-            tableHTML += `
-                    </div>
-                </div>
-                
                 <div class="summary-section">
                     <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">${poData.title} Summary</h3>
                     
@@ -1399,11 +1306,6 @@
             courseData.mappings[mappingKey][coKey] = parseInt(value) || 0;
             updateCalculations();
             updateOverallSummary();
-        }
-
-        // Update justification
-        function updateJustification(mappingKey, value) {
-            courseData.justifications[mappingKey] = value;
         }
 
         // Update calculations
@@ -1613,18 +1515,10 @@
             courseData.courseCode = document.getElementById('courseCode').value;
             courseData.courseTitle = document.getElementById('courseTitle').value;
             
-            // Collect all justification data
-            document.querySelectorAll('.justification-textarea').forEach(textarea => {
-                const mappingKey = textarea.getAttribute('data-justification');
-                if (mappingKey) {
-                    courseData.justifications[mappingKey] = textarea.value;
-                }
-            });
-            
             const dataToSave = {
                 ...courseData,
                 timestamp: new Date().toISOString(),
-                version: '1.1',
+                version: '1.0',
                 department: 'ECE'
             };
 
@@ -1638,7 +1532,7 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            showMessage('Data Saved Successfully', 'Your course mapping data and justifications have been saved to your downloads folder.', 'success');
+            showMessage('Data Saved Successfully', 'Your course mapping data has been saved to your downloads folder.', 'success');
         }
 
         // Load data
@@ -1658,8 +1552,7 @@
                             courseCode: loadedData.courseCode || '',
                             courseTitle: loadedData.courseTitle || '',
                             courseOutcomes: loadedData.courseOutcomes || courseData.courseOutcomes,
-                            mappings: loadedData.mappings || {},
-                            justifications: loadedData.justifications || {}
+                            mappings: loadedData.mappings || {}
                         };
                         
                         // Update UI
@@ -1953,57 +1846,12 @@
             const coPoMappingWS = XLSX.utils.aoa_to_sheet(coPoMappingData);
             XLSX.utils.book_append_sheet(wb, coPoMappingWS, 'CO-PO Mapping Summary');
             
-            // Create Justifications Sheet
-            const justificationsData = [
-                ['Mapping Justifications - ECE'],
-                ['Course Code:', courseData.courseCode],
-                ['Course Title:', courseData.courseTitle],
-                ['Generated On:', new Date().toLocaleDateString()],
-                [''],
-                ['PO/PSO', 'Competency', 'PI Number', 'Performance Indicator', 'Justification']
-            ];
-            
-            // Add justification data for each PO/PSO
-            const allOutcomesForJustifications = ['po1', 'po2', 'po3', 'po4', 'po5', 'po6', 'po7', 'po8', 'po9', 'po10', 'po11', 'po12', 'pso1', 'pso2', 'pso3'];
-            allOutcomesForJustifications.forEach(poKey => {
-                const poData = programOutcomes[poKey];
-                if (poData) {
-                    poData.competencies.forEach(comp => {
-                        comp.indicators.forEach(indicator => {
-                            const mappingKey = `${poKey}_${comp.comp}_${indicator.pi}`;
-                            const justification = courseData.justifications[mappingKey] || 'No justification provided';
-                            
-                            justificationsData.push([
-                                poData.title.split(':')[0],
-                                comp.competency,
-                                indicator.pi,
-                                indicator.description,
-                                justification
-                            ]);
-                        });
-                    });
-                }
-            });
-            
-            const justificationsWS = XLSX.utils.aoa_to_sheet(justificationsData);
-            
-            // Set column widths for justifications sheet
-            justificationsWS['!cols'] = [
-                { wch: 8 },  // PO/PSO
-                { wch: 40 }, // Competency
-                { wch: 12 }, // PI Number
-                { wch: 60 }, // Performance Indicator
-                { wch: 80 }  // Justification
-            ];
-            
-            XLSX.utils.book_append_sheet(wb, justificationsWS, 'Justifications');
-            
             // Generate and download the Excel file
-            const fileName = `${courseData.courseCode}_ECE_CO_PO_Mapping_${new Date().toISOString().split('T')[0]}.xlsx`;
+            const fileName = `${courseData.courseCode}_CO_PO_Mapping_${new Date().toISOString().split('T')[0]}.xlsx`;
             XLSX.writeFile(wb, fileName);
 
             setTimeout(() => {
-                showMessage('Excel Report Generated', `Your comprehensive ECE mapping report has been saved as "${fileName}". The file includes detailed sheets for each PO/PSO, overall summary, consolidated mapping matrix, and justifications.`, 'success');
+                showMessage('Excel Report Generated', `Your comprehensive mapping report has been saved as "${fileName}". The file includes detailed sheets for each PO/PSO, overall summary, and consolidated mapping matrix.`, 'success');
             }, 1000);
         }
 
@@ -2060,7 +1908,7 @@
 
         // Reset all data
         function resetAllData() {
-            if (confirm('This will reset ALL data including course details, mappings, and justifications. Continue?')) {
+            if (confirm('This will reset ALL data including course details and mappings. Continue?')) {
                 courseData = {
                     courseCode: 'GXEST203',
                     courseTitle: 'FOUNDATIONS OF COMPUTING: FROM HARDWARE ESSENTIALS TO WEB DESIGN',
@@ -2071,8 +1919,7 @@
                         'Develop simple interactive web pages and validate the inputs.',
                         'Collaborate effectively in teams to plan, implement, test, and present a course project that demonstrates web page development using html, css and java script'
                     ],
-                    mappings: {},
-                    justifications: {}
+                    mappings: {}
                 };
 
                 document.getElementById('courseCode').value = courseData.courseCode;
